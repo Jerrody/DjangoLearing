@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+</head>
+<body>
+    {% for category in categories %}
+    <a href="{% url 'category' category.slug %}">{{ category.name }}</a><br>
+    {% endfor %}
+
+    <h3>{{ post.title }}</h3>
+    <h5>{{ post.published_date }}</h5>
+    <h5>Category: {{ post.category }}</h5>
+    Теги: {% for tag in post.tags.all %}
+    <a href="{% url 'tag' tag.slug %}">{{ tag.name }}</a>,
+          {% endfor %}
+    <hr>
+
+    <h4>Comments:</h4>
+    {% for comment in comments %}
+        User: {{ comment.author }}<br>
+        {{ comment.text }}<br>
+    {{ comment.created_date }}<br><br>
+    {% endfor %}
+
+</body>
+</html>
