@@ -1,17 +1,32 @@
 from django.contrib.auth.models import User
 from django.db import models
-from mptt.models import MPTTModel
-from mptt.models import TreeForeignKey
-from django.utils import timezone
 from django.urls import reverse
+from django.utils import timezone
+from mptt.models import MPTTModel, TreeForeignKey
+
 
 class Category(MPTTModel):
     """Model Category"""
     name = models.CharField('Name', max_length=100)
     slug = models.SlugField('Slug', max_length=50)
-    description = models.TextField('Description', max_length=100, default='', blank=True)
-    parent = TreeForeignKey('self', verbose_name='Parent Category', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    template = models.CharField('Template', max_length=500, default='blog/post_list.html')
+    description = models.TextField(
+        'Description',
+        max_length=100,
+        default='',
+        blank=True
+    )
+    parent = TreeForeignKey(
+        'self',
+        verbose_name='Parent Category',
+        on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name='children'
+    )
+    template = models.CharField(
+        'Template',
+        max_length=500,
+        default='blog/post_list.html'
+    )
     published = models.BooleanField('Display', default=True)
     paginated = models.PositiveIntegerField('Count Post in Page', default=5)
     sort = models.PositiveIntegerField('Order', default=0)
@@ -22,6 +37,8 @@ class Category(MPTTModel):
         verbose_name = 'Category'
         verbose_name_plural = 'Category'
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'category_slug': self.slug})
 
 class Tag(models.Model):
     """Model Tag"""
@@ -37,22 +54,61 @@ class Tag(models.Model):
         return self.name
 
     # def get_absolute_url(self):
-    #     return reverse('tag_detail', kwargs={'slug': self.slug})
+    #     return reverse('tag', kwargs={'slug': self.slug})
 
 class Post(models.Model):
     """Model Post"""
-    author = models.ForeignKey(User, verbose_name='Author', on_delete=models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(
+        User,
+        verbose_name='Author',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     title = models.CharField('Name Post', max_length=100)
     mini_text = models.TextField('Text Post', max_length=500)
     text = models.TextField('Mini Text', max_length=1000)
-    created_date = models.DateTimeField('Date Time', auto_now=True, auto_now_add=False)
+    created_date = models.DateTimeField(
+        'Date Time',
+        auto_now=True,
+        auto_now_add=False
+    )
     slug = models.SlugField('Slug', max_length=50)
-    edit_date = models.DateTimeField('Edit Date', default=timezone.now, blank=True, null=True)
-    published_date = models.DateTimeField('Publish Date', default=timezone.now, blank=True, null=True)
-    image = models.ImageField('Main Image', upload_to='post/', blank=True, null=True)
-    category = models.ForeignKey(Category, verbose_name = 'Category', on_delete=models.CASCADE, null=True)
-    tags = models.ManyToManyField(Tag, verbose_name='Tag', blank=True, related_name='tag')
-    template = models.CharField('Template', max_length=500, default='blog/post_detail.html')
+    edit_date = models.DateTimeField(
+        'Edit Date',
+        default=timezone.now,
+        blank=True,
+        null=True
+    )
+    published_date = models.DateTimeField(
+        'Publish Date',
+        default=timezone.now,
+        blank=True,
+        null=True
+    )
+    image = models.ImageField(
+        'Main Image',
+        upload_to='post/',
+        blank=True,
+        null=True
+    )
+    category = models.ForeignKey(
+        Category,
+        verbose_name = 'Category',
+        on_delete=models.CASCADE,
+        null=True
+    )
+    tags = models.ManyToManyField(
+        Tag,
+        verbose_name='Tag',
+        blank=True,
+        related_name='tag'
+    )
+    template = models.CharField(
+        'Template',
+        max_length=500,
+        default='blog/post_detail.html'
+    )
     published = models.BooleanField('Publish', default=True)
     status = models.BooleanField('For Registered', default=False)
     sort = models.PositiveIntegerField('Order', default=0)
@@ -66,7 +122,11 @@ class Post(models.Model):
         return self.category.template
 
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'category': self.category.slug, 'slug': self.slug} )
+        return reverse(
+            'post_detail',
+            kwargs={'category': self.category.slug,
+            'slug': self.slug}
+        )
 
     def get_tags(self):
         return self.tags.all()
@@ -80,11 +140,20 @@ class Post(models.Model):
 
 class Comment(models.Model):
     """Model Comment"""
-    author = models.ForeignKey(User, verbose_name='Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        User,
+        verbose_name='Author',
+        on_delete=models.CASCADE
+    )
     text = models.TextField('Text', max_length=100)
     created_date = models.DateTimeField('Date Time', max_length=100)
     moderation = models.BooleanField()
-    post = models.ForeignKey(Post, verbose_name='Post', on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(
+        Post,
+        verbose_name='Post',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
 
     def __str__(self):
         return self.text

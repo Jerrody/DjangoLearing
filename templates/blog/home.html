@@ -1,21 +1,21 @@
 <!--<!DOCTYPE html>-->
 <!--<html lang="en">-->
 <!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Home Page</title>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>Home Page</title>-->
 <!--</head>-->
 <!--<body>-->
-<!--    {% for category in categories %}-->
-<!--    <a href="{% url 'category' category.slug %}">{{category.name}}</a><br>-->
-<!--    {% endfor %}-->
+<!--{% for category in categories %}-->
+<!--<a href="{% url 'category' category.slug %}">{{ category.name }}</a><br>-->
+<!--{% endfor %}-->
 
-<!--    {% for post in posts %}-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <h3><a href="{% url 'post' post.slug %}">{{post.title}}</a></h3>-->
-<!--    <h5>{{post.created_date}}</h5>-->
-<!--    <h5>Категория: {{post.slug}}</h5>-->
-<!--    {% endfor %}-->
+<!--{% for post in posts %}-->
+<!--<br>-->
+<!--<br>-->
+<!--<h3><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>-->
+<!--<h5>{{ post.created_date }}</h5>-->
+<!--<h5>Категория: { {post.slug }}</h5>-->
+<!--{% endfor %}-->
 
 <!--</body>-->
 <!--</html>-->
