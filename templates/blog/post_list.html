@@ -5,20 +5,20 @@
     <title>Home Page</title>
 </head>
 <body>
-  {% for category in categories %}
-    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a><br>
-  {% endfor %}
-<hr>
-  {% if post_list %}
-    {% for post in post_list  %}
-      <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-      <h5>{{ post.published_date }}</h5>
-      <h5>Category: {{ post.category }}</h5>
-      <small>Comments: {{ post.get_comcounts }}</small><br>
-      <small>Viewed: {{ post.viewed }}</small>
+    {% for category in categories %}
+        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a><br>
     {% endfor %}
-  {% else %}
+<hr>
+    {% if post_list %}
+        {% for post in post_list  %}
+            <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <h5>{{ post.published_date }}</h5>
+            <h5>Category: {{ post.category }}</h5>
+            <small>Comments: {{ post.get_comcounts }}</small><br>
+            <small>Viewed: {{ post.viewed }}</small>
+        {% endfor %}
+    {% else %}
     <h2>Статей на сайте нет.</h2>
-  {% endif %}
+    {% endif %}
 </body>
 </html>

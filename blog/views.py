@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import View
 
-from .models import Category, Comment, Post, Tag
+from .models import Category, Post
+from .forms import CommentForm
 
 
 class PostListView(View):
@@ -40,8 +41,18 @@ class PostDetailView(View):
     def get(self, request, **kwargs):
         category_list = Category.objects.filter(published=True)
         post = get_object_or_404(Post, slug=kwargs.get('slug'))
+        form = CommentForm()
         return render(
             request,
             post.template,
-            {'categories': category_list, 'post': post}
+            {'categories': category_list, 'post': post, 'form': form}
         )
+
+    def post(self, request, **kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.post = Post.objects.get(slug=kwargs.get('slug'))
+            form.author = request.user
+            form.save()
+        return redirect(request.path)

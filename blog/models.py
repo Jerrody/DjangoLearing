@@ -30,6 +30,7 @@ class Category(MPTTModel):
     published = models.BooleanField('Display', default=True)
     paginated = models.PositiveIntegerField('Count Post in Page', default=5)
     sort = models.PositiveIntegerField('Order', default=0)
+
     def __str__(self):
         return self.name
 
@@ -40,21 +41,20 @@ class Category(MPTTModel):
     def get_absolute_url(self):
         return reverse('category', kwargs={'category_slug': self.slug})
 
+
 class Tag(models.Model):
     """Model Tag"""
     name = models.CharField('Name', max_length=100)
     slug = models.SlugField('Slug', max_length=50)
     published = models.BooleanField('Display or Not?', default=True)
 
-    class Meta():
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tag'
-
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('tag', kwargs={'slug': self.slug})
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tag'
+
 
 class Post(models.Model):
     """Model Post"""
@@ -114,7 +114,10 @@ class Post(models.Model):
     sort = models.PositiveIntegerField('Order', default=0)
     viewed = models.PositiveIntegerField('Viewed', default=0)
 
-    class Meta():
+    def __str__(self):
+        return self.title
+
+    class Meta:
         verbose_name='Post'
         verbose_name_plural = 'Post'
 
@@ -131,9 +134,6 @@ class Post(models.Model):
     def get_tags(self):
         return self.tags.all()
 
-    def __str__(self):
-        return self.title
-
     def get_comcounts(self):
         return self.comments.count()
 
@@ -146,8 +146,8 @@ class Comment(models.Model):
         on_delete=models.CASCADE
     )
     text = models.TextField('Text', max_length=100)
-    created_date = models.DateTimeField('Date Time', max_length=100)
-    moderation = models.BooleanField()
+    created_date = models.DateTimeField('Date Time', max_length=100, auto_now=True)
+    moderation = models.BooleanField(default=True)
     post = models.ForeignKey(
         Post,
         verbose_name='Post',
@@ -158,6 +158,6 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
-    class Meta():
+    class Meta:
         verbose_name = 'Comment'
         verbose_name_plural = 'Comment'
