@@ -37,6 +37,8 @@ class Category(MPTTModel):
     class Meta():
         verbose_name = 'Category'
         verbose_name_plural = 'Category'
+    class MPTTMeta:
+        order_insertion_by  = ["sort", ]
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'category_slug': self.slug})
@@ -120,6 +122,7 @@ class Post(models.Model):
     class Meta:
         verbose_name='Post'
         verbose_name_plural = 'Post'
+        ordering = ["sort", "-published_date"]
 
     def get_category_template(self):
         return self.category.template
@@ -146,7 +149,11 @@ class Comment(models.Model):
         on_delete=models.CASCADE
     )
     text = models.TextField('Text', max_length=100)
-    created_date = models.DateTimeField('Date Time', max_length=100, auto_now=True)
+    created_date = models.DateTimeField(
+        'Date Time',
+        max_length=100,
+        auto_now=True
+    )
     moderation = models.BooleanField(default=True)
     post = models.ForeignKey(
         Post,
@@ -160,4 +167,3 @@ class Comment(models.Model):
 
     class Meta:
         verbose_name = 'Comment'
-        verbose_name_plural = 'Comment'

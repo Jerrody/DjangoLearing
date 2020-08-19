@@ -6,7 +6,7 @@ from django.urls import reverse
 class Page(models.Model):
     title = models.CharField('Title', max_length=100)
     text = models.TextField('Text', max_length=500)
-    active = models.BooleanField('Active', default=False)
+    active = models.BooleanField('Active', default=True)
     template = models.CharField(
         'Template',
         max_length=100,

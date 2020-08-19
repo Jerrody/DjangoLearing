@@ -16,10 +16,11 @@ class PostListView(View):
         )
 
     def get(self, request, category_slug=None, slug=None):
-        category_list = Category.objects.filter(published=True)
+        # category_list = Category.objects.filter(published=True)
         if category_slug is not None:
             posts = self.get_queryset().filter(
-                category__slug=category_slug, category__published=True
+                category__slug=category_slug,
+                category__published=True
             )
         elif slug is not None:
             posts = self.get_queryset().filter(tags__slug=slug)
@@ -32,7 +33,7 @@ class PostListView(View):
         return render(
             request,
             template,
-            {'post_list': posts, 'categories': category_list}
+            {'post_list': posts}
         )
 
 
