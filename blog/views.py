@@ -31,7 +31,10 @@ class PostListView(View):
         if posts.exists():
             template = posts.first().get_category_template()
         else:
+            # Output Template with No Article Page(Articles does not exist)
             # template = 'blog/post_list.html'
+            # Getting Error 404, if don't find articles and Custom
+            # MiddleWare start work and we getting About Page.
             raise Http404()
         return render(
             request,

@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100, verbose_name='Name')),
                 ('slug', models.SlugField(verbose_name='Slug')),
                 ('description', models.TextField(blank=True, default='', max_length=100, verbose_name='Description')),
-                ('template', models.CharField(default='blog/post_list.html', max_length=500, verbose_name='Template')),
+                ('template', models.CharField(default='blog/home.html', max_length=500, verbose_name='Template')),
                 ('published', models.BooleanField(default=True, verbose_name='Display')),
                 ('paginated', models.PositiveIntegerField(default=5, verbose_name='Count Post in Page')),
                 ('sort', models.PositiveIntegerField(default=0, verbose_name='Order')),

@@ -25,7 +25,7 @@ class Category(MPTTModel):
     template = models.CharField(
         'Template',
         max_length=500,
-        default='blog/post_list.html'
+        default='blog/home.html'
     )
     published = models.BooleanField('Display', default=True)
     paginated = models.PositiveIntegerField('Count Post in Page', default=5)
