@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-{% load blog_tags %}
+{% load blog_tags menu_tags%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
 </head>
 <body>
-{% category_list order="sort" template="base/blog/categories.html" %}
+{% menu_item menu="Main" %}
+<hr>
+    {% category_list order="sort" template="base/blog/categories.html" %}
 {#    {% for_category_list count=2 order="sort" as categories %}#}
 {#    {% for category in categories %}#}
 {#        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a><br>#}

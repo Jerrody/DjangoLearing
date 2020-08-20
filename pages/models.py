@@ -31,14 +31,14 @@ class Page(models.Model):
     template = models.CharField(
         'Template',
         max_length=100,
-        default='blog/home.html'
+        default='blog/post_list.html'
     )
     registration_required = models.BooleanField(
         'Need to be a Sigh Up',
         help_text='Only registered users can view this page',
         default=True
     )
-    slug = models.SlugField('slug', max_length=50, unique=True)
+    slug = models.CharField('slug', max_length=50, unique=True)
 
     def __str__(self):
         return self.title
@@ -57,7 +57,7 @@ class Page(models.Model):
         verbose_name_plural = 'Page'
 
     def get_absolute_url(self):
-        return reverse('page_detail', kwargs={'slug': self.slug})
+        return iri_to_uri(get_script_prefix().rstrip('/') + self.slug)
 
     def get_category_template(self):
         return self.template
