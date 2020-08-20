@@ -5,6 +5,7 @@ from django.views.generic import View
 
 from .models import Category, Post
 from .forms import CommentForm
+# from ..pages.models import Page
 
 
 class PostListView(View):
@@ -57,3 +58,13 @@ class PostDetailView(View):
             form.author = request.user
             form.save()
         return redirect(request.path)
+
+# class PageView(View):
+#     """Page View"""
+#     def get(self, request, **kwargs):
+#         page = PageView.objects.filter(
+#             published_date__lte=datetime.now(),
+#             published=True)
+#         # unresolved: post.template(need to add page.template
+#         # or keep it how it is
+#         return render(request, page.template, {'page': page})
