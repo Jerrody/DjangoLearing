@@ -31,7 +31,7 @@ class Page(models.Model):
     template = models.CharField(
         'Template',
         max_length=100,
-        default='blog/post_list.html'
+        default='blog/home.html'
     )
     registration_required = models.BooleanField(
         'Need to be a Sigh Up',

@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='page',
             name='template',
-            field=models.CharField(default='blog/post_list.html', max_length=100, verbose_name='Template'),
+            field=models.CharField(default='blog/home.html', max_length=100, verbose_name='Template'),
         ),
     ]

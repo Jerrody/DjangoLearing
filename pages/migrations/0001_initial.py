@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('edit_date', models.DateTimeField(auto_now=True, null=True, verbose_name='Date Editing')),
                 ('published_date', models.DateTimeField(blank=True, null=True, verbose_name='Data Publishing')),
                 ('published', models.BooleanField(default=True, verbose_name='Publish?')),
-                ('template', models.CharField(default='page/post_list.html', max_length=100, verbose_name='Template')),
+                ('template', models.CharField(default='page/home.html', max_length=100, verbose_name='Template')),
                 ('registration_required', models.BooleanField(default=True, help_text='Only registered users can view this page', verbose_name='Need to be a Sigh Up')),
                 ('slug', models.SlugField(unique=True, verbose_name='slug')),
             ],
