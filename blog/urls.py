@@ -13,5 +13,5 @@ urlpatterns = [
         views.PostListView.as_view(),
         name='category'
     ),
-    # path('', views.PostListView.as_view()),
+    path('', views.PostListView.as_view()),
 ]

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import View
 
@@ -30,7 +31,8 @@ class PostListView(View):
         if posts.exists():
             template = posts.first().get_category_template()
         else:
-            template = 'blog/post_list.html'
+            # template = 'blog/post_list.html'
+            raise Http404()
         return render(
             request,
             template,
