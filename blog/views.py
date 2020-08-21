@@ -6,7 +6,6 @@ from django.views.generic import View
 
 from .models import Category, Post
 from .forms import CommentForm
-# from ..pages.models import Page
 
 
 class PostListView(View):
@@ -32,10 +31,10 @@ class PostListView(View):
             template = posts.first().get_category_template()
         else:
             # Output Template with No Article Page(Articles does not exist)
-            # template = 'blog/post_list.html'
+            template = 'blog/post_list.html'
             # Getting Error 404, if don't find articles and Custom
             # MiddleWare start work and we getting About Page.
-            raise Http404()
+            # raise Http404()
         return render(
             request,
             template,
